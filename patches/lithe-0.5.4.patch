@@ -1,0 +1,21 @@
+diff --git a/windows/tauri/src/extensions/bundled/bundled-extension-manifests.ts b/windows/tauri/src/extensions/bundled/bundled-extension-manifests.ts
+index 3ad6f7f..b7f2391 100644
+--- a/windows/tauri/src/extensions/bundled/bundled-extension-manifests.ts
++++ b/windows/tauri/src/extensions/bundled/bundled-extension-manifests.ts
+@@ -3,6 +3,7 @@ import pierreIconTheme from "./icon-themes/pierre/extension.json";
+ import symbolsIconTheme from "./icon-themes/symbols/extension.json";
+ import type { ExtensionManifest } from "../types/extension-manifest";
+ 
++import jenkinsfileManifest from "./languages/jenkinsfile/extension.json";
+ export interface BundledExtensionManifestEntry {
+   manifest: ExtensionManifest;
+   relativePath: string;
+@@ -24,4 +25,8 @@ export const bundledExtensionManifests: BundledExtensionManifestEntry[] = [
+     manifest: materialIconTheme as ExtensionManifest,
+     relativePath: "icon-themes/material",
+   },
++  {
++    manifest: jenkinsfileManifest as ExtensionManifest,
++    relativePath: "languages/jenkinsfile",
++  },
+ ];
