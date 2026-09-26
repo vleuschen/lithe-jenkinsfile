@@ -2,7 +2,7 @@
 
 ## tree-sitter-groovy
 
-This project uses the parser grammar from [murtaza64/tree-sitter-groovy](https://github.com/murtaza64/tree-sitter-groovy), pinned to commit `deb0dcf8c4544f07564060f6e9b9f6e4b0bfc27d`.
+This project uses the parser grammar from [murtaza64/tree-sitter-groovy](https://github.com/murtaza64/tree-sitter-groovy), pinned to commit `781d9cd1b482a70a6b27091e5c9e14bbcab3b768`.
 
 The upstream parser is distributed under the MIT License. The generated `extension/parser.wasm` is built from that pinned source. The Jenkins Pipeline additions in `extension/highlights.scm` are original project code and are not copied from an upstream editor plugin.
 
@@ -11,7 +11,7 @@ The MIT License text for the pinned parser source is reproduced below:
 ```text
 MIT License
 
-Copyright (c) 2023 Murtaza
+Copyright (c) 2024 Murtaza Javaid
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

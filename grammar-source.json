@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/murtaza64/tree-sitter-groovy.git",
+  "revision": "781d9cd1b482a70a6b27091e5c9e14bbcab3b768",
+  "treeSitterCli": "0.27.0",
+  "grammarPath": "."
+}
