@@ -7,6 +7,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $source = (Resolve-Path -LiteralPath $LitheSourcePath).Path
 $patch = (Resolve-Path (Join-Path $PSScriptRoot "..\patches\lithe-0.5.4.patch")).Path
+$monacoPatch = (Resolve-Path (Join-Path $PSScriptRoot "..\patches\lithe-0.5.4-monaco.patch")).Path
 $target = Join-Path $source "windows\tauri\src\extensions\bundled\languages\jenkinsfile"
 $manifest = Join-Path $source "windows\tauri\src\extensions\bundled\bundled-extension-manifests.ts"
 
@@ -16,5 +17,10 @@ if ($PSCmdlet.ShouldProcess($target, "Remove Jenkinsfile extension assets") -and
 if (Test-Path $manifest) {
   & git -C $source apply --reverse --check $patch
   if ($LASTEXITCODE -eq 0 -and $PSCmdlet.ShouldProcess($source, "Reverse Lithe Jenkinsfile manifest patch")) { & git -C $source apply --reverse $patch }
+}
+$languageContributions = Join-Path $source "frontend\editor\src\language-contributions.ts"
+if (Test-Path $languageContributions) {
+  & git -C $source apply --reverse --check $monacoPatch
+  if ($LASTEXITCODE -eq 0 -and $PSCmdlet.ShouldProcess($source, "Reverse Lithe Jenkinsfile Monaco tokenizer patch")) { & git -C $source apply --reverse $monacoPatch }
 }
 Write-Output "Removed Jenkinsfile highlighting sources from $source"

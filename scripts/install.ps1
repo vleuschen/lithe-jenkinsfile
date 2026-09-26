@@ -11,6 +11,7 @@ $ErrorActionPreference = "Stop"
 $source = (Resolve-Path -LiteralPath $LitheSourcePath).Path
 $plugin = (Resolve-Path -LiteralPath $PluginPath).Path
 $patch = (Resolve-Path (Join-Path $PSScriptRoot "..\patches\lithe-0.5.4.patch")).Path
+$monacoPatch = (Resolve-Path (Join-Path $PSScriptRoot "..\patches\lithe-0.5.4-monaco.patch")).Path
 $target = Join-Path $source "windows\tauri\src\extensions\bundled\languages\jenkinsfile"
 
 if (-not (Test-Path (Join-Path $source ".git"))) { throw "LitheSourcePath must be a Git checkout: $source" }
@@ -24,6 +25,13 @@ if (-not $SkipPatch) {
   } elseif ((Select-String -LiteralPath (Join-Path $source "windows\tauri\src\extensions\bundled\bundled-extension-manifests.ts") -Pattern "languages/jenkinsfile" -Quiet)) {
     Write-Verbose "Manifest patch already applied."
   } else { throw "The Lithe patch does not apply cleanly. Check out the supported v0.5.4 source." }
+
+  & git -C $source apply --check $monacoPatch
+  if ($LASTEXITCODE -eq 0) {
+    if ($PSCmdlet.ShouldProcess($source, "Apply Lithe Jenkinsfile Monaco tokenizer patch")) { & git -C $source apply $monacoPatch }
+  } elseif ((Select-String -LiteralPath (Join-Path $source "frontend\editor\src\language-contributions.ts") -Pattern "jenkinsfileMonarchLanguage" -Quiet)) {
+    Write-Verbose "Monaco tokenizer patch already applied."
+  } else { throw "The Lithe Monaco tokenizer patch does not apply cleanly. Check out the supported v0.5.4 source." }
 }
 
 if ($PSCmdlet.ShouldProcess($target, "Install Jenkinsfile extension assets")) {

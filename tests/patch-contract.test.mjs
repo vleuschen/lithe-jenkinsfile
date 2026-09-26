@@ -12,9 +12,12 @@ const root = new URL("..", import.meta.url);
 
 test("Lithe 0.5.4 patch is scoped and reversible", async () => {
   const patch = await readFile(new URL("../patches/lithe-0.5.4.patch", import.meta.url), "utf8");
+  const monacoPatch = await readFile(new URL("../patches/lithe-0.5.4-monaco.patch", import.meta.url), "utf8");
   assert.match(patch, /bundled-extension-manifests\.ts/);
   assert.match(patch, /languages\/jenkinsfile/);
   assert.doesNotMatch(patch, /diff --git a\/(?!windows\/tauri\/src\/extensions\/bundled\/bundled-extension-manifests\.ts)/);
+  assert.match(monacoPatch, /language-contributions\.ts/);
+  assert.match(monacoPatch, /jenkinsfileMonarchLanguage/);
 
   const work = await mkdtemp(join(tmpdir(), "lithe-patch-test-"));
   try {

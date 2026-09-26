@@ -23,7 +23,7 @@ Then build the Lithe checkout using its normal Windows release instructions and 
 pwsh -NoProfile -File .\scripts\uninstall.ps1 -LitheSourcePath 'D:\src\Lithe-IDEA'
 ```
 
-The scripts validate Git metadata, apply one versioned registry patch, copy only the extension assets, and support paths containing spaces or non-ASCII characters. They fail closed on conflicts.
+The scripts validate Git metadata, apply versioned registry and Monaco-tokenizer patches, copy only the extension assets, and support paths containing spaces or non-ASCII characters. They fail closed on conflicts.
 
 ## Development and verification
 

@@ -1,0 +1,81 @@
+diff --git a/frontend/editor/src/language-contributions.ts b/frontend/editor/src/language-contributions.ts
+index a38a9da..517fcb8 100644
+--- a/frontend/editor/src/language-contributions.ts
++++ b/frontend/editor/src/language-contributions.ts
+@@ -40,6 +40,60 @@ type MonarchLanguageModule = {
+   language: Parameters<typeof languages.setMonarchTokensProvider>[1];
+ };
+ 
++const jenkinsfileConf = {
++  comments: { lineComment: "//", blockComment: ["/*", "*/"] },
++  brackets: [
++    ["{", "}"] as [string, string],
++    ["[", "]"] as [string, string],
++    ["(", ")"] as [string, string],
++  ],
++  autoClosingPairs: [
++    { open: "{", close: "}" },
++    { open: "[", close: "]" },
++    { open: "(", close: ")" },
++    { open: "'", close: "'" },
++    { open: '"', close: '"' },
++  ],
++};
++
++const jenkinsfileMonarchLanguage = {
++  defaultToken: "",
++  tokenPostfix: ".jenkinsfile",
++  keywords: [
++    "pipeline", "agent", "any", "none", "stages", "stage", "steps", "post", "always",
++    "success", "failure", "unstable", "changed", "aborted", "cleanup", "options", "parameters",
++    "environment", "when", "branch", "buildingTag", "changeRequest", "triggeredBy", "input",
++    "script", "parallel", "matrix", "tools", "triggers", "timeout", "retry", "timestamps",
++    "disableConcurrentBuilds", "buildDiscarder", "checkout", "scm", "sh", "bat", "powershell",
++    "echo", "error", "warnError", "catchError", "archiveArtifacts", "junit", "publishHTML",
++    "docker", "dockerfile", "image", "credentials", "withCredentials", "dir", "ws", "node",
++    "def", "if", "else", "for", "in", "while", "return", "try", "catch", "finally", "throw",
++    "new", "class", "import", "as", "true", "false", "null",
++  ],
++  operators: ["=", "==", "!=", "===", "!==", "=>", "&&", "||", "?", "+", "-", "*", "/", "%"],
++  symbols: /[=><!~?:&|+\-*\/\^%]+/,
++  tokenizer: {
++    root: [
++      [/\s+/, ""],
++      [/\/\/.*$/, "comment"],
++      [/\/\*/, "comment", "@comment"],
++      [/'''/, "string", "@tripleSingle"],
++      [/\"\"\"/, "string", "@tripleDouble"],
++      [/'([^'\\]|\\.)*'/, "string"],
++      [/\"([^\"\\]|\\.)*\"/, "string"],
++      [/\$\{[^}]+\}/, "variable"],
++      [/@[a-zA-Z_][\w]*/, "annotation"],
++      [/[a-zA-Z_][\w-]*/, { cases: { "@keywords": "keyword", "@default": "identifier" } }],
++      [/\d+(\.\d+)?/, "number"],
++      [/[{}()[\].,;:]/, "delimiter"],
++      [/@symbols/, { cases: { "@operators": "operator", "@default": "" } }],
++    ],
++    comment: [[/[^/*]+/, "comment"], [/\/\*/, "comment", "@push"], [/\*\//, "comment", "@pop"], [/[/\\*]/, "comment"]],
++    tripleSingle: [[/[^']+/, "string"], [/'''/, "string", "@pop"], [/./, "string"]],
++    tripleDouble: [[/[^\"]+/, "string"], [/\"\"\"/, "string", "@pop"], [/./, "string"]],
++  },
++};
++
+ const monarchLanguageLoaders: Record<string, () => Promise<MonarchLanguageModule>> = {
+   dotenv: () => import("monaco-editor/esm/vs/basic-languages/shell/shell.js"),
+   c: () => import("monaco-editor/esm/vs/basic-languages/cpp/cpp.js"),
+@@ -76,6 +130,7 @@ const monarchLanguageLoaders: Record<string, () => Promise<MonarchLanguageModule
+   typescript: () => import("monaco-editor/esm/vs/basic-languages/typescript/typescript.js"),
+   xml: () => import("monaco-editor/esm/vs/basic-languages/xml/xml.js"),
+   yaml: () => import("monaco-editor/esm/vs/basic-languages/yaml/yaml.js"),
++  jenkinsfile: async () => ({ conf: jenkinsfileConf, language: jenkinsfileMonarchLanguage }),
+ };
+ 
+ const monarchLanguagePromises = new Map<string, Promise<boolean>>();
+@@ -142,6 +197,7 @@ languages.setMonarchTokensProvider("diff", {
+ ensureLanguage("r", [".r", ".R"], ["R", "r"], [".Rprofile"]);
+ ensureLanguage("rmarkdown", [".rmd", ".Rmd"], ["R Markdown", "rmd"]);
+ ensureLanguage("jupyter-notebook", [".ipynb"], ["Jupyter Notebook", "ipynb"]);
++ensureLanguage("jenkinsfile", [], ["Jenkinsfile", "Jenkins Pipeline", "Groovy"], ["Jenkinsfile"]);
+ 
+ ensureLanguage(
+   "gitignore",
