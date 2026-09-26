@@ -1,0 +1,19 @@
+// Declarative Jenkins Pipeline example.
+pipeline {
+  agent any
+  environment {
+    APP_ENV = "ci-${env.BRANCH_NAME}"
+  }
+  options { timestamps() }
+  parameters { string(name: 'TARGET', defaultValue: 'test') }
+  stages {
+    stage('Build') {
+      when { branch 'main' }
+      steps {
+        sh 'npm test'
+        parallel linux: { sh 'make linux' }, windows: { sh 'make windows' }
+      }
+    }
+  }
+  post { always { echo "Finished ${env.BUILD_NUMBER}" } }
+}
