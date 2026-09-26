@@ -1,6 +1,6 @@
 {
   "name": "lithe-jenkinsfile",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Unofficial Jenkinsfile syntax highlighting for Lithe 0.5.4",
   "license": "Apache-2.0",
@@ -10,7 +10,7 @@
     "test:node": "node --test tests/*.test.mjs",
     "test:pester": "pwsh -NoProfile -Command \"Invoke-Pester -Path tests/install.Tests.ps1 -Output Detailed\"",
     "build:grammar": "pwsh -NoProfile -File scripts/build-grammar.ps1 -OutputPath extension/parser.wasm",
-    "package": "pwsh -NoProfile -File scripts/package-release.ps1 -Version 0.1.0 -OutputDirectory dist"
+    "package": "pwsh -NoProfile -File scripts/package-release.ps1 -Version 0.1.1 -OutputDirectory dist"
   },
   "devDependencies": {
     "tree-sitter-cli": "0.27.0",
