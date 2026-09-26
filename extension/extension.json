@@ -1,0 +1,46 @@
+{
+  "id": "community.lithe-jenkinsfile",
+  "name": "lithe-jenkinsfile",
+  "displayName": "Jenkinsfile Syntax Highlighting",
+  "description": "Unofficial Groovy and Jenkins Pipeline syntax highlighting for Lithe.",
+  "version": "0.1.0",
+  "publisher": "Lithe Jenkinsfile Contributors",
+  "license": "Apache-2.0",
+  "categories": ["Language"],
+  "engines": {
+    "lithe": "=0.5.4"
+  },
+  "languages": [
+    {
+      "id": "jenkinsfile",
+      "extensions": [".groovy", ".gradle"],
+      "filenames": ["Jenkinsfile"],
+      "filenamePatterns": ["*.Jenkinsfile"],
+      "aliases": ["Jenkinsfile", "Jenkins Pipeline", "Groovy"],
+      "configuration": "./language-configuration.json"
+    }
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "jenkinsfile",
+        "extensions": [".groovy", ".gradle"],
+        "filenames": ["Jenkinsfile"],
+        "filenamePatterns": ["*.Jenkinsfile"],
+        "aliases": ["Jenkinsfile", "Jenkins Pipeline", "Groovy"],
+        "configuration": "./language-configuration.json"
+      }
+    ]
+  },
+  "activationEvents": ["onLanguage:jenkinsfile"],
+  "grammar": {
+    "wasmPath": "./parser.wasm",
+    "highlightQueryPath": "./highlights.scm",
+    "scopeName": "source.jenkinsfile",
+    "languageId": "jenkinsfile"
+  },
+  "installation": {
+    "type": "bundled",
+    "minEditorVersion": "0.5.4"
+  }
+}
