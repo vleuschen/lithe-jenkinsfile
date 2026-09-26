@@ -13,7 +13,7 @@
 ## Global Constraints
 
 - Target Windows and Lithe `v0.5.4`, whose peeled tag commit is `9674a4457916285fc232504d07b6b1c08c0c7d64`.
-- Pin `murtaza64/tree-sitter-groovy` to commit `deb0dcf8c4544f07564060f6e9b9f6e4b0bfc27d`.
+- Pin `murtaza64/tree-sitter-groovy` to commit `781d9cd1b482a70a6b27091e5c9e14bbcab3b768` (the revision recorded by the redistributable WASM build used for the committed artifact).
 - Pin `tree-sitter-cli` and `web-tree-sitter` to `0.27.0`; commit `package-lock.json`.
 - Register language ID `jenkinsfile` for exact filename `Jenkinsfile`, glob `*.Jenkinsfile`, and extensions `.groovy` and `.gradle`.
 - Do not add an LSP, formatter, linter, Jenkins server connection, or background process.
@@ -112,7 +112,7 @@ git commit -m "feat: define Jenkinsfile extension manifest"
 - Create: `tests/grammar-artifact.test.mjs`
 
 **Interfaces:**
-- Consumes: `tree-sitter-cli@0.27.0` and grammar commit `deb0dcf8c4544f07564060f6e9b9f6e4b0bfc27d`.
+- Consumes: `tree-sitter-cli@0.27.0` and grammar commit `781d9cd1b482a70a6b27091e5c9e14bbcab3b768`.
 - Produces: `Build-GroovyGrammar([string] $OutputPath, [switch] $Offline)`, a loadable `extension/parser.wasm`, and a lowercase SHA-256 sidecar.
 
 - [ ] **Step 1: Write the failing parser provenance test**
